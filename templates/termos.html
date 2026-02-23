@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Termos Salvos</title>
+  <style>
+    :root {
+      --primary: #0A66C2;
+      --bg: #F3F2EF;
+      --border: #d1d5db;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      margin:0;
+    }
+    .center {
+      max-width: 1000px; margin:20px auto; background:#fff;
+      padding:24px 28px; border-radius:12px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+    h1 { margin-top:0; }
+    table { width:100%; border-collapse:collapse; margin-top:16px; }
+    th, td { border:1px solid #e5e7eb; padding:6px 8px; font-size:0.9rem; }
+    th { background:#f9fafb; }
+    a { font-size:0.85rem; color: var(--primary); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    @media (max-width: 600px) {
+      .center { margin:8px; padding:16px 14px; border-radius:0; }
+      table { font-size:0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="center">
+    <h1>Termos Salvos</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Colaborador / Fornecedor / Parceiro</th>
+          <th>Data do Documento</th>
+          <th>Criado em</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in termos %}
+        <tr>
+          <td>{{ t.id }}</td>
+          <td>{{ t.nome_colab }}</td>
+          <td>{{ t.data_doc }}</td>
+          <td>{{ t.criado_em.strftime('%d/%m/%Y %H:%M') if t.criado_em else '' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <p style="margin-top:16px;">
+      <a href="{{ url_for('termo') }}">Voltar ao termo</a>
+      {% if session.get('is_admin') %}
+        | <a href="{{ url_for('usuarios') }}">Controle de usuários</a>
+      {% endif %}
+      | <a href="{{ url_for('sair') }}">Sair</a>
+    </p>
+  </div>
+</body>
+</html>
+
